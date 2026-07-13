@@ -1,0 +1,53 @@
+variable "aws_region" {
+  description = "AWS region for the demo infrastructure"
+  type        = string
+  default     = "us-east-1"
+}
+
+variable "key_name" {
+  description = "Name of the SSH key pair created in AWS"
+  type        = string
+  default     = "ansible-key"
+}
+
+variable "private_key_path" {
+  description = "Local path where the private SSH key will be stored"
+  type        = string
+  default     = "/workspaces/Terraform-practice/main_project/tmp/ansible-key.pem"
+}
+
+variable "ssh_cidr" {
+  description = "CIDR block allowed to access SSH"
+  type        = string
+  default     = "0.0.0.0/0"
+}
+
+variable "vpc_cidr" {
+  description = "CIDR block for the VPC"
+  type        = string
+  default     = "10.0.0.0/16"
+}
+
+variable "subnet_cidr" {
+  description = "CIDR block for the public subnet"
+  type        = string
+  default     = "10.0.1.0/24"
+}
+
+variable "availability_zone" {
+  description = "Availability zone for the subnet"
+  type        = string
+  default     = "us-east-1a"
+}
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t3.micro"
+}
+
+variable "environment" {
+  description = "Environment tag value"
+  type        = string
+  default     = "Dev"
+}
