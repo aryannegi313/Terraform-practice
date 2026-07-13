@@ -20,6 +20,9 @@ terraform{
         region = "us-east-1"
         dynamodb_table = "terraform-locks"
         encrypt= true
+        #use_lockfile = true 
+        # this can be used to enable state locking, if dynamoDB table is not used,
+        # this new and recommended way to enable state locking
     }
 
     required_version = ">=1.2"

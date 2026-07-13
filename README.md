@@ -61,8 +61,12 @@ This installs Nginx and prepares the server with a simple web page.
 
 The [state_file_management](state_file_management) directory creates an S3 bucket and DynamoDB table for Terraform remote state and locking. This is useful for shared or production-style workflows and avoids keeping state locally.
 
-## Notes
+## Suggested improvements
 
-- The example uses a specific AWS region and CIDR ranges, so you may want to adjust them for your environment.
-- The security group rules are currently set up for a specific SSH source IP, which should be updated if needed.
-- The generated private key path is written to the Terraform output and used by Ansible.
+These values are intentionally simple for learning, but they can be handled more robustly in a real setup:
+
+- Move hard-coded values such as AWS region, CIDR blocks, instance type, and SSH source IP into a Terraform variable file or tfvars file.
+- Replace the fixed security-group rule with a variable or a data source that uses your current public IP.
+- Consider using a more descriptive S3 bucket naming strategy and a separate environment-based state layout.
+- Keep the generated private key in a secure, non-shared location and avoid committing it to source control.
+- Add input validation and tagging conventions for production-style infrastructure.

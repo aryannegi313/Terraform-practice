@@ -1,7 +1,9 @@
+# Expose the key pair name to the parent module.
 output "key_name" {
   value = aws_key_pair.public_key_aws.key_name
 }
 
+# Expose the generated private key path to the parent module.
 output "private_key_path" {
   value = local_sensitive_file.private_key.filename
 }

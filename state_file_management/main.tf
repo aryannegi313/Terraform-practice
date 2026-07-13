@@ -1,4 +1,5 @@
-esource "aws_s3_bucket" "state_file" {
+# Create an S3 bucket used for storing Terraform remote state.
+resource "aws_s3_bucket" "state_file" {
     bucket = "terraform-state-file-aryan-7-12-2026"
 
     tags = {
@@ -14,6 +15,7 @@ resource "aws_s3_bucket_versioning" "bucket_versionig" {
     }
 }
 
+# Create a DynamoDB table to lock Terraform state during apply operations.
 resource "aws_dynamodb_table" "state_lock_table" {
     name = "terraform-locks"
     billing_mode   = "PAY_PER_REQUEST"

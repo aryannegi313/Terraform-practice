@@ -1,9 +1,11 @@
+# Name of the AWS EC2 key pair created for the instance.
 variable "key_name" {
   description = "AWS EC2 key pair name"
   type        = string
   default = "terraform_key_first"
 }
 
+# Local path where the private key will be written.
 variable "private_key_path" {
   description = "Path where private PEM key will be stored"
   type        = string

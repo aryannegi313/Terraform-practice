@@ -1,9 +1,11 @@
+# Create the SSH key resources used by the EC2 instance.
 module "ssh-key" {
     source = "./modules/ssh-key"
     key_name        = "ansible-key"
     private_key_path = "/workspaces/Terraform-practice/main_project/tmp/ansible-key.pem"
 }
 
+# Example ingress rules for the demo environment.
 variable "sg_ingress_rules" {
     default = {
         http = { protocol = "tcp", from_port = 80, to_port=80, cidr_ipv4 = "0.0.0.0/0"}
@@ -11,12 +13,14 @@ variable "sg_ingress_rules" {
     }
 }
 
+# Example egress rule for the demo environment.
 variable "sg_egress_rules" {
     default = {
         none = { protocol = "-1", from_port = 0, to_port=0, cidr_ipv4 = "0.0.0.0/0"}
     }
 }
 
+# Look up the latest Amazon Linux 2023 AMI in the configured region.
 data "aws_ami" "amazon_linux"{
     owners = ["amazon"]
     most_recent = true
@@ -27,6 +31,7 @@ data "aws_ami" "amazon_linux"{
     }
 }
 
+# Create the main VPC for the demo infrastructure.
 resource "aws_vpc" "main" {
     cidr_block = "10.0.0.0/16"
     enable_dns_support   = true
@@ -37,6 +42,7 @@ resource "aws_vpc" "main" {
     }
 }
 
+# Deploy a public subnet that will host the EC2 instance.
 resource "aws_subnet" "main" {
     vpc_id = aws_vpc.main.id
     cidr_block = "10.0.1.0/24"
@@ -81,6 +87,7 @@ resource "aws_vpc_security_group_egress_rule" "allow_all" {
     cidr_ipv4 = each.value.cidr_ipv4
 }
 
+# Create the EC2 instance and attach the generated SSH key.
 resource "aws_instance" "amazon_linux_ins" {
     ami = data.aws_ami.amazon_linux.id 
     instance_type = "t3.micro"
@@ -94,6 +101,7 @@ resource "aws_instance" "amazon_linux_ins" {
     }
 }
 
+# Generate an Ansible inventory file so the new server can be configured automatically.
 resource "local_file" "ansible_inventory" {
     filename = "${path.root}/../ansible/inventory.ini"
     content = <<-EOT
