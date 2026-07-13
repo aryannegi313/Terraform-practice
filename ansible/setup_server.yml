@@ -1,0 +1,21 @@
+- name: Create nginx server
+  hosts: servers
+  become: true
+
+  tasks:
+    - name: Install nginx
+      dnf:
+        name: nginx
+        state: present
+    
+    - name: Start nginx
+      systemd_service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Update the html file
+      copy:
+        dest: /usr/share/nginx/html/index.html
+        content: |
+          Deployed by Terraform - $(hostname)"

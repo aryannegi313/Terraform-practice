@@ -1,0 +1,6 @@
+.terraform*
+aws
+tmp
+*tfstate*
+*.ini
+settings*
